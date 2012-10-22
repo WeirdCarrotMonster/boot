@@ -6,18 +6,18 @@ class Command(models.Model):
         return self.name
     name = models.CharField(max_length=16)
 
-class ConfigItem(models.Model):
-    def __unicode__(self):
-        return self.command.name + " " + self.args
-    command = models.ForeignKey(Command)
-    args = models.CharField(max_length=32)
-
 class MenuItem(models.Model):
     def __unicode__(self):
         return self.name
     name = models.CharField(max_length=32)
-    item = models.ManyToManyField(ConfigItem)
-    
+
+class ConfigItem(models.Model):
+    def __unicode__(self):
+        return self.command.name + " " + self.args
+    command = models.ForeignKey(Command)
+    menuItem = models.ForeignKey(MenuItem)
+    args = models.CharField(max_length=32)
+   
 class Config(models.Model):
     def __unicode__(self):
         return self.name
