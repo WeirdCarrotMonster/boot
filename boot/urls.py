@@ -14,4 +14,5 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^(?P<mac_addr>.+)/pxelinux.cfg/(?P<cfg_name>.+)/$', 'objects.views.getConfig'),
 )

@@ -1,0 +1,6 @@
+{% for menuItem in menuItems %}
+{{ menuItem.name }}
+{% for item in menuItem.item.all %}
+{{ item.command }} {{ item.args }}
+{% endfor %}
+{% endfor %}
