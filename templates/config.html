@@ -1,6 +1,6 @@
+{{ config.more }}
 {% for menuItem in menuItems %}
-{{ menuItem.name }}
-{% for item in menuItem.configitem_set.all %}
-{{ item.command }} {{ item.args }}
+label {{ menuItem.name }}
+{% for item in menuItem.configitem_set.all %}        {{ item.command }} {{ item.args }}
 {% endfor %}
 {% endfor %}

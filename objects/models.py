@@ -1,6 +1,6 @@
 from django.db import models
+from django.conf import settings
 
-# Create your models here.
 class Command(models.Model):
     def __unicode__(self):
         return self.name
@@ -21,6 +21,7 @@ class ConfigItem(models.Model):
 class Config(models.Model):
     def __unicode__(self):
         return self.name
+    more = models.CharField(max_length=512)
     name = models.CharField(max_length=32)
     menuItem = models.ManyToManyField(MenuItem)
 
@@ -36,3 +37,9 @@ class Machine(models.Model):
     name = models.CharField(max_length=32)
     mac = models.CharField(max_length=12)
     group = models.ForeignKey(Group)
+
+class File(models.Model):
+    def __unicode__(self):
+        return self.name
+    name = models.CharField(max_length=32)
+    kernelFile = models.FileField(upload_to=settings.MEDIA_ROOT)
