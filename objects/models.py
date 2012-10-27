@@ -34,12 +34,15 @@ class Group(models.Model):
 class Machine(models.Model):
     def __unicode__(self):
         return self.name
+    def save(self, force_insert=False, force_update=False):
+        self.mac = self.mac.lower()
+        super(Machine, self).save(force_insert, force_update)
     name = models.CharField(max_length=32)
-    mac = models.CharField(max_length=12)
+    mac = models.CharField(max_length=17)
     group = models.ForeignKey(Group)
 
 class File(models.Model):
     def __unicode__(self):
         return self.name
     name = models.CharField(max_length=32)
-    kernelFile = models.FileField(upload_to=settings.MEDIA_ROOT)
+    fileItem = models.FileField(upload_to=settings.MEDIA_ROOT)
