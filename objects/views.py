@@ -5,15 +5,15 @@ from django.core.servers.basehttp import FileWrapper
 
 def serveConfig(request, mac_addr, cfg_name):
 	try:
-		print mac_addr
 		machine = Machine.objects.get(mac=mac_addr.lower())
-		if machine is not None:
-			config = machine.group.config
-		else:
-			config = Config.objects.get(name="fallback")
+		config = machine.group.config
 		return render_to_response("config.html", {"menuItems":config.menuItem.all(), "config":config})
 	except:
-		return HttpResponse("")
+		try:
+			config = Config.objects.get(name="fallback")
+			return render_to_response("config.html", {"menuItems":config.menuItem.all(), "config":config})
+		except:
+			return HttpResponse("")
 
 def serveFile(request, filename):
 	try:
