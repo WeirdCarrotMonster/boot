@@ -6,7 +6,7 @@ from django.core.servers.basehttp import FileWrapper
 def serveConfig(request, mac_addr, cfg_name):
 	try:
 		machine = Machine.objects.get(mac=mac_addr.lower())
-		if cfg_name = "default":
+		if cfg_name == "default":
 			config = machine.group.config
 		else:
 			config = Config.objects.get(name=cfg_name)
