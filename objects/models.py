@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+import os
 
 class Command(models.Model):
     def __unicode__(self):
@@ -44,5 +45,9 @@ class Machine(models.Model):
 class File(models.Model):
     def __unicode__(self):
         return self.name
+    def save(self, force_insert=False, force_update=False):
+        oldFile = File.objects.get(pk=self.pk)
+        os.remove(oldFile.fileItem.name)
+        super(File, self).save(force_insert, force_update)
     name = models.CharField(max_length=64)
     fileItem = models.FileField(upload_to=settings.MEDIA_ROOT)

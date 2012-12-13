@@ -13,7 +13,8 @@ def serveConfig(request, mac_addr, cfg_name):
 		return render_to_response("config.html", {"menuItems":config.menuItem.all(), "config":config})
 	except:
 		try:
-			config = Config.objects.get(name="fallback")
+			defaultGroup = Group.objects.get(id=1)
+			config = defaultGroup.config
 			return render_to_response("config.html", {"menuItems":config.menuItem.all(), "config":config})
 		except:
 			return HttpResponse("")
