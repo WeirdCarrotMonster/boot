@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.core.exceptions import *
 import os
 
 class Command(models.Model):
@@ -49,7 +50,7 @@ class File(models.Model):
         try:
             oldFile = File.objects.get(pk=self.pk)
             os.remove(oldFile.fileItem.name)
-        except:
+        except File.DoesNotExist:
             pass
         finally:
             super(File, self).save(force_insert, force_update)
