@@ -1,9 +1,14 @@
+# coding=utf-8
 from django.db import models
 from django.conf import settings
 import os
 
 
 class Command(models.Model):
+    class Meta:
+        verbose_name = "Команда"
+        verbose_name_plural = "Команды"
+
     def __unicode__(self):
         return self.name
 
@@ -11,6 +16,10 @@ class Command(models.Model):
 
 
 class MenuItem(models.Model):
+    class Meta:
+        verbose_name = "Элемент меню"
+        verbose_name_plural = "Элементы меню"
+
     def __unicode__(self):
         return self.name
 
@@ -27,15 +36,23 @@ class ConfigItem(models.Model):
 
 
 class Config(models.Model):
+    class Meta:
+        verbose_name = "Файл конфигурации"
+        verbose_name_plural = "Файлы конфигурации"
+
     def __unicode__(self):
         return self.name
 
     more = models.CharField(max_length=32768)
     name = models.CharField(max_length=64)
-    menuItem = models.ManyToManyField(MenuItem)
+    menuItem = models.ManyToManyField(MenuItem, null=True, blank=True)
 
 
 class Group(models.Model):
+    class Meta:
+        verbose_name = "Группа"
+        verbose_name_plural = "Группы"
+
     def __unicode__(self):
         return self.name
 
@@ -44,6 +61,10 @@ class Group(models.Model):
 
 
 class Machine(models.Model):
+    class Meta:
+        verbose_name = "Машина"
+        verbose_name_plural = "Машины"
+
     def __unicode__(self):
         return self.name
 
@@ -57,13 +78,20 @@ class Machine(models.Model):
 
 
 class File(models.Model):
+    class Meta:
+        verbose_name = "Файл"
+        verbose_name_plural = "Файлы"
+
     def __unicode__(self):
         return self.name
 
     def save(self, force_insert=False, force_update=False):
         try:
             oldFile = File.objects.get(pk=self.pk)
-            os.remove(oldFile.fileItem.name)
+            try:
+                os.remove(oldFile.fileItem.name)
+            except:
+                pass
         except File.DoesNotExist:
             pass
         finally:
