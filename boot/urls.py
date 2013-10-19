@@ -17,5 +17,5 @@ urlpatterns = patterns('',
                        #WAT-mode engaged
                        # Файлы
                        url(r'^media/(?P<filename>.*)$', 'objects.views.serveFile'),
-                       url(r'^(.*)/(?P<filename>.*)$', 'objects.views.serveFile'),
+                       url(r'^(.*)/(?P<filename>.*)$', 'objects.views.serveFile')
 )

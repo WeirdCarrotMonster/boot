@@ -2,6 +2,8 @@ from objects.models import *
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from django.core.servers.basehttp import FileWrapper
+from django.conf import settings
+import os
 
 
 def serveConfig(request, mac_addr, cfg_name):
@@ -24,7 +26,8 @@ def serveConfig(request, mac_addr, cfg_name):
 def serveFile(request, filename):
     try:
         fileObject = File.objects.get(name=filename)
-        wrapper = FileWrapper(file(fileObject.fileItem.name))
+        filepath = os.path.join(settings.MEDIA_ROOT, fileObject.fileItem.name)
+        wrapper = FileWrapper(file(filepath))
         response = HttpResponse(wrapper, content_type='application/octet-stream')
         response['Content-Length'] = fileObject.fileItem.size
         return response

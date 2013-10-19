@@ -86,16 +86,10 @@ class File(models.Model):
         return self.name
 
     def save(self, force_insert=False, force_update=False):
-        try:
-            oldFile = File.objects.get(pk=self.pk)
-            try:
-                os.remove(oldFile.fileItem.name)
-            except:
-                pass
-        except File.DoesNotExist:
-            pass
-        finally:
-            super(File, self).save(force_insert, force_update)
+        path = os.path.join(settings.MEDIA_ROOT, "files", self.fileItem.name)
+        if os.path.exists(path):
+            os.remove(path)
+        super(File, self).save(force_insert, force_update)
 
     name = models.CharField(max_length=64)
-    fileItem = models.FileField(upload_to=settings.MEDIA_ROOT)
+    fileItem = models.FileField(upload_to="files")
