@@ -177,10 +177,17 @@ class File(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        path = os.path.join(settings.MEDIA_ROOT, "files", self.fileItem.name)
+        path = os.path.join(settings.MEDIA_ROOT, self.name)
+        self.fileItem.name = self.name
         if os.path.exists(path):
             os.remove(path)
         super(File, self).save(*args, **kwargs)
+
+    def delete(self, using=None):
+        path = os.path.join(settings.MEDIA_ROOT, self.name)
+        if os.path.exists(path):
+            os.remove(path)
+        super(File, self).delete(using)
 
     name = models.CharField(
         verbose_name="Имя файла",

@@ -5,7 +5,7 @@ from django.conf import settings
 import os
 
 
-def serveConfig(request, mac_addr, cfg_name):
+def serve_сonfig(request, mac_addr, cfg_name):
     try:
         machine = Machine.objects.get(mac=mac_addr.lower())
         if cfg_name == "default":
@@ -22,13 +22,17 @@ def serveConfig(request, mac_addr, cfg_name):
             return HttpResponse("")
 
 
-def serveFile(request, filename):
-    try:
-        fileObject = File.objects.get(name=filename)
-        filepath = os.path.join(settings.MEDIA_ROOT, fileObject.fileItem.name)
-        wrapper = FileWrapper(file(filepath))
-        response = HttpResponse(wrapper, content_type='application/octet-stream')
-        response['Content-Length'] = fileObject.fileItem.size
-        return response
-    except:
-        return HttpResponse("")
+def serve_file(request, filename):
+    file_paths = [
+        os.path.join(settings.MEDIA_ROOT, filename),
+        os.path.join(settings.MEDIA_ROOT_FALLBACK, filename)
+    ]
+
+    for path in file_paths:
+        if os.path.isfile(path):
+            fsock = open(path, "r")
+            response = HttpResponse(fsock, content_type='application/octet-stream')
+            response['Content-Length'] = os.path.getsize(path)
+            return response
+    return HttpResponse("")
+

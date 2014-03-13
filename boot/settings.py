@@ -43,6 +43,7 @@ USE_L10N = True
 USE_TZ = True
 
 MEDIA_ROOT = "/tmp/boot"
+MEDIA_ROOT_FALLBACK = "/tmp/boot1"
 
 MEDIA_URL = '/media/'
 
