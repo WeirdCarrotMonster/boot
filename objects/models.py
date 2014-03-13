@@ -37,6 +37,9 @@ class MenuItem(models.Model):
         verbose_name_plural = "Элементы меню"
 
     def __str__(self):
+        return self.name
+
+    def render(self):
         t = Template(self.template)
 
         #TODO: переписать через values() и генератор
@@ -146,7 +149,7 @@ class Machine(models.Model):
         verbose_name_plural = "Машины"
 
     def __str__(self):
-        return self.name
+        return "{} ({})".format(self.name, self.mac)
 
     def save(self, *args, **kwargs):
         self.mac = self.mac.lower()
@@ -160,6 +163,7 @@ class Machine(models.Model):
         max_length=17)
     group = models.ForeignKey(
         Group,
+        null=True,
         verbose_name="Группа")
 
 
