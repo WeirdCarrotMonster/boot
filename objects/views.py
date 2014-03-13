@@ -1,5 +1,4 @@
 from objects.models import *
-from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from django.core.servers.basehttp import FileWrapper
 from django.conf import settings
@@ -13,12 +12,12 @@ def serveConfig(request, mac_addr, cfg_name):
             config = machine.group.config
         else:
             config = Config.objects.get(name=cfg_name)
-        return render_to_response("config.html", {"menuItems": config.menuItem.all(), "config": config})
+        return HttpResponse(config.render())
     except:
         try:
             defaultGroup = Group.objects.get(id=1)
             config = defaultGroup.config
-            return render_to_response("config.html", {"menuItems": config.menuItem.all(), "config": config})
+            return HttpResponse(config.render())
         except Group.DoesNotExist:
             return HttpResponse("")
 
@@ -31,6 +30,5 @@ def serveFile(request, filename):
         response = HttpResponse(wrapper, content_type='application/octet-stream')
         response['Content-Length'] = fileObject.fileItem.size
         return response
-        pass
     except:
         return HttpResponse("")
