@@ -16,7 +16,7 @@ def serve_config(request, mac_addr, cfg_name):
         return HttpResponse(config.render())
     except:
         try:
-            defaultGroup = Group.objects.get(id=1)
+            defaultGroup = Group.objects.get(name="default")
             config = defaultGroup.config
             return HttpResponse(config.render())
         except Group.DoesNotExist:
