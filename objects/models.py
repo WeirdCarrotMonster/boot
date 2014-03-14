@@ -61,6 +61,10 @@ class MenuItem(models.Model):
         verbose_name="Имя",
         unique=True,
         max_length=64)
+    label = models.CharField(
+        verbose_name="Заголовок",
+        unique=True,
+        max_length=64)
     template = models.CharField(
         verbose_name="Шаблон",
         max_length=512)
