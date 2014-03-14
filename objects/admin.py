@@ -46,9 +46,9 @@ class MenuItemAdmin(admin.ModelAdmin):
 
     def preview(self, obj):
         try:
-            return obj
-        except:
-            return "Не удалось показать предварительный просмотр"
+            return obj.render()
+        except Exception as e:
+            return "Не удалось показать предварительный просмотр" + str(e)
 
     preview.short_description = "Результат"
 

@@ -164,6 +164,7 @@ class Machine(models.Model):
     group = models.ForeignKey(
         Group,
         null=True,
+        blank=True,
         verbose_name="Группа")
 
 
