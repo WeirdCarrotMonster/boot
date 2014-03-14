@@ -1,3 +1,5 @@
+# coding=utf-8
+
 from objects.models import *
 from django.http import HttpResponse
 from django.core.servers.basehttp import FileWrapper
