@@ -2,12 +2,11 @@
 
 from objects.models import *
 from django.http import HttpResponse
-from django.core.servers.basehttp import FileWrapper
 from django.conf import settings
 import os
 
 
-def serve_сonfig(request, mac_addr, cfg_name):
+def serve_config(request, mac_addr, cfg_name):
     try:
         machine = Machine.objects.get(mac=mac_addr.lower())
         if cfg_name == "default":
@@ -33,8 +32,9 @@ def serve_file(request, filename):
     for path in file_paths:
         if os.path.isfile(path):
             fsock = open(path, "r")
-            response = HttpResponse(fsock, content_type='application/octet-stream')
+            response = HttpResponse(
+                fsock,
+                content_type='application/octet-stream')
             response['Content-Length'] = os.path.getsize(path)
             return response
     return HttpResponse("")
-
