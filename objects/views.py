@@ -4,9 +4,11 @@ from objects.models import *
 from django.http import HttpResponse
 from django.conf import settings
 import os
+import urllib
 
 
 def serve_config(request, mac_addr, cfg_name):
+    mac_addr = urllib.unquote(mac_addr)
     try:
         machine = Machine.objects.get(mac=mac_addr.lower())
         if cfg_name == "default":
