@@ -9,9 +9,12 @@ admin.autodiscover()
 urlpatterns = patterns(
     '',
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
-    url(r'^(?P<mac_addr>.+)/pxelinux.cfg/(?P<cfg_name>.+)/$', 'objects.views.serve_сonfig'),
-    url(r'^(?P<mac_addr>.+)/pxelinux.cfg/(?P<cfg_name>.+)$', 'objects.views.serve_сonfig'),
+    url(r'^static/(?P<path>.*)$', 'django.views.static.serve',
+        {'document_root': settings.STATIC_ROOT}),
+    url(r'^(?P<mac_addr>.+)/pxelinux.cfg/(?P<cfg_name>.+)/$',
+        'objects.views.serve_config'),
+    url(r'^(?P<mac_addr>.+)/pxelinux.cfg/(?P<cfg_name>.+)$',
+        'objects.views.serve_config'),
     url(r'^media/(?P<filename>.*)$', 'objects.views.serve_file'),
     url(r'^(.*)/(?P<filename>.*)$', 'objects.views.serve_file')
 )
